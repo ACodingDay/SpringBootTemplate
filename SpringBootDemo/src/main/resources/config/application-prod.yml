@@ -1,0 +1,35 @@
+server:
+  port: 80
+  servlet:
+    context-path: /demo
+spring:
+  application:
+    name: SpringBootDemo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    name: defaultDataSource
+    password: 123456
+    username: root
+  thymeleaf:
+    cache: true
+    check-template: true
+    check-template-location: true
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    excluded-view-names: ''
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    root: info
+    com.yyt.springBootDemo: warn
+  file:
+    name: log/system.log

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::commonHeader('后台管理')">
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="common::commonNav" th:remove="tag"></div>
+        <div th:include="common::commonTop" th:remove="tag"></div>
+    </div>
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- 清除样式 -->
+        <div class="clearfix"></div>
+        <h1>网站首页</h1>
+    </div>
+</div>
+<div th:include="common::commonJS" th:remove="tag"></div>
+</body>
+</html>

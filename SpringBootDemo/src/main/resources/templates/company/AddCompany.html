@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
+    <title>新增公司信息</title>
+    <!-- RequireJS -->
+    <script type="text/javascript" data-main="/custom/company/AddCompany.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body class="bg-white">
+<div class="container">
+    <!-- 表单 水平布局 -->
+    <form class="form-horizontal" id="form_company" method="post">
+        <div class="form-group row" style="margin-top: 20px;">
+            <label for="inputComName" class="col-sm-2 col-md-2 text-right control-label">公司名称</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="text" class="form-control" id="inputComName" name="inputComName" placeholder="填写公司的全称" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComAddr" class="col-sm-2 col-md-2 text-right control-label">公司地址</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="text" class="form-control" id="inputComAddr" name="inputComAddr" placeholder="填写公司的详细地址" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComUrl" class="col-sm-2 col-md-2 text-right control-label">公司官网</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="url" class="form-control" id="inputComUrl" name="inputComUrl"
+                       placeholder="例如 https://www.google.com/" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComTel" class="col-sm-2 col-md-2 text-right control-label">公司座机</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="tel" class="form-control" id="inputComTel" name="inputComTel"
+                       placeholder="例如 021-12345678" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComDate" class="col-sm-2 col-md-2 text-right control-label">成立日期</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="date" class="form-control" id="inputComDate" name="inputComDate"
+                       placeholder="例如 2008-10" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComNums" class="col-sm-2 col-md-2 text-right control-label">员工人数</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="digits" class="form-control" id="inputComNums" name="inputComNums"
+                       placeholder="例如 2000" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComOut" class="col-sm-2 col-md-2 text-right control-label">总产值(万元)</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="number" class="form-control" id="inputComOut" name="inputComOut"
+                       placeholder="例如 1000.0000" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComDesc" class="col-sm-2 col-md-2 text-right control-label">公司简介</label>
+            <div class="col-sm-10 col-md-10">
+                <textarea id="inputComDesc" name="inputComDesc" class="form-control" style="resize: vertical;"
+                          rows="3" placeholder="简要描述公司的状况"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComStatus" class="col-sm-2 col-md-2 text-right control-label">营运状态</label>
+            <div class="col-sm-10 col-md-10">
+                <select class="form-control" id="inputComStatus" name="inputComStatus">
+                    <option value="正常运营">正常运营</option>
+                    <option value="正在注销">正在注销</option>
+                    <option value="已经注销">已经注销</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputConName" class="col-sm-2 col-md-2 text-right control-label">联系人姓名</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="text" class="form-control" id="inputConName" name="inputConName" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputConPhone" class="col-sm-2 col-md-2 text-right control-label">联系人手机</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="tel" class="form-control" id="inputConPhone" name="inputConPhone" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputConEmail" class="col-sm-2 col-md-2 text-right control-label">联系人邮箱</label>
+            <div class="col-sm-10 col-md-10">
+                <input type="email" class="form-control" id="inputConEmail" name="inputConEmail" required>
+            </div>
+        </div>
+        <!-- 上传框 -->
+        <div class="upload" id="inputConFile" name="inputConFile" action="/CompanyModule/upload"
+             data-num="4" data-type="jpg,png,gif,doc,docx,pdf" data-size="10240" data-value="">
+        </div>
+        <div class="row" style="margin-top: 20px;"></div>
+        <!-- 按钮 -->
+        <div class="form-group text-center row">
+            <div class="col-sm-6">
+                <button type="reset" class="btn btn-warning">重 置</button>
+            </div>
+            <div class="col-sm-6">
+                <!-- 异步提交，不要填写 type="submit" -->
+                <button type="button" id="btn_save" class="btn btn-primary">提 交</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

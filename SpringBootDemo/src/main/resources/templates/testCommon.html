@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeader(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">测试页面抽取</title>
+    <link href="libs/bootstrap-4.6.0-dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 左侧导航栏部分 -->
+    <div th:fragment="commonNav">
+        <h1 style="background-color: #74b9ff">左侧导航栏</h1>
+    </div>
+    <!-- 右侧 -->
+    <div th:fragment="commonTop">
+        <h1 style="background-color: #b2bec3">页面顶部公共部分</h1>
+    </div>
+</body>
+</html>

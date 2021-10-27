@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../images/favicon.ico" type="image/ico"/>
+    <title>公司数据表格</title>
+    <!-- RequireJS 异步加载所需文件 -->
+    <script type="text/javascript" data-main="/custom/company/ListCompany.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="common::commonNav" th:remove="tag"></div>
+        <div th:include="common::commonTop" th:remove="tag"></div>
+    </div>
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- 清除样式 -->
+        <div class="clearfix"></div>
+        <div class="card">
+            <div class="card-header">多条件查询</div>
+            <!-- 自定义搜索条件框 -->
+            <div class="card-body">
+                <form class="form-inline row">
+                    <label for="searchComName"><h4>公司名称：</h4></label>
+                    <input type="text" id="searchComName" name="searchComName" class="form-control"
+                           placeholder="如 谷歌">
+                    <label for="searchComNum"><h4>员工人数大于：</h4></label>
+                    <input type="text" id="searchComNum" name="searchComNum" class="form-control"
+                           placeholder="如 500">
+                    <label for="searchComStatus"><h4>营运状态：</h4></label>
+                    <select class="form-control" id="searchComStatus" name="searchComStatus">
+                        <option value="全部">全部</option>
+                        <option value="正常运营">正常运营</option>
+                        <option value="正在注销">正在注销</option>
+                        <option value="已经注销">已经注销</option>
+                    </select>
+                    <!-- 点击搜索按钮 -->
+                    <button type="button" id="searchComBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> 搜索
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- 按钮工具条 -->
+        <div id="toolbar">
+            <!-- 新增公司按钮 -->
+            <button id="btn_add" type="button" class="btn btn-success">
+                <i class="fas fa-plus-square"></i> 新增公司
+            </button>
+        </div>
+        <!-- 显示公司的数据表格  -->
+        <table id="tb_company" style="cursor: pointer;"></table>
+        <!-- 点击展开详细信息 -->
+        <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                    data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                折叠详细信息
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body" id="detail_company"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
