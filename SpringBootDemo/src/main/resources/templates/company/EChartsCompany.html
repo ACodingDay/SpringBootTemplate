@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
+    <title>公司信息图表</title>
+    <!-- 引入 Apache ECharts 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.min.js"></script>
+    <!-- RequireJS -->
+    <script type="text/javascript" data-main="/custom/company/EChartsCompany.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="common::commonNav" th:remove="tag"></div>
+        <div th:include="common::commonTop" th:remove="tag"></div>
+    </div>
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- 清除样式 -->
+        <div class="clearfix"></div>
+        <!-- 一行放置两个 -->
+        <div class="row">
+            <div class="col-6">
+                <!-- 基本折线图 -->
+                <div id="basicLine" style="height:400px;"></div>
+            </div>
+            <div class="col-6">
+                <!-- 基本柱状图 -->
+                <div id="basicBar" style="height:400px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <!-- 基本面积图 -->
+                <div id="basicArea" style="height:400px;"></div>
+            </div>
+            <div class="col-6">
+                <!-- 圆角饼图 -->
+                <div id="roundedPie" style="height:400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

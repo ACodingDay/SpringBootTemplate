@@ -2,6 +2,7 @@ package com.yyt.springbootdemo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yyt.springbootdemo.domain.Company;
+import com.yyt.springbootdemo.domain.EChartsData;
 import com.yyt.springbootdemo.service.CompanyService;
 import com.yyt.springbootdemo.utils.ReceiveUploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -148,6 +150,29 @@ public class CompanyCtl {
         return result.toString();
     }
 
+    @PostMapping("/echarts")
+    @ResponseBody
+    public Map<String, List<EChartsData>> echart(){
+        /**
+         * 为 ECharts 图表展示，准备数据
+         */
+        Map<String, List<EChartsData>> map = new HashMap<>();
+        // 员工数量集合
+        List<EChartsData> listEmployeenNmber = new ArrayList<>();
+        // 公司产值集合
+        List<EChartsData> listTotalOut = new ArrayList<>();
+        List<Company> list = csi.findAll();
+        // 组装数据
+        for (Company company : list){
+            listEmployeenNmber.add(new EChartsData(company.getComname(), company.getEmployeenumber()));
+            listTotalOut.add(new EChartsData(company.getComname(), company.getTotaloutput()));
+        }
+        // 赋值给 map 集合
+        map.put("listPerson", listEmployeenNmber);
+        map.put("listOutput", listTotalOut);
+        return map;
+    }
+
     @RequestMapping("/showP1")
     public String showPublicHtml() {
         // 测试返回公共文件夹 public 中的页面
@@ -170,6 +195,12 @@ public class CompanyCtl {
     public String addCompanyHtml() {
         // 返回新增公司信息表单
         return "/company/AddCompany.html";
+    }
+
+    @RequestMapping("/eChartsCompany")
+    public String chartCompanyHtml() {
+        // 返回公司信息图表
+        return "/company/EChartsCompany.html";
     }
 
     // RESTful 风格接口

@@ -4,7 +4,7 @@
  * @date：2021-10-21 20:10:06
  **/
 require(
-    ['../custom/GlobalConfig'],
+    ['/custom/GlobalConfig.js'],
     function () {
         requirejs(
             ['jquery', 'bootstrap', 'custom', 'bootstrap_table', 'bootstrap_table_CN'],

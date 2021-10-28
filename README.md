@@ -11,12 +11,11 @@ Spring Boot 项目通用模板。
 
 | 名称               | 说明                                            | 官网                                                         |
 | ------------------ | ----------------------------------------------- | ------------------------------------------------------------ |
-| Vue                | 渐进式 JavaScript 框架                          | [Vue.js (vuejs.org)](https://v3.cn.vuejs.org/)               |
-| Element Plus       | 饿了么团队基于 Vue 3.0 的 UI 组件库             | [Element - 网站快速成型工具](https://element-plus.gitee.io/zh-CN/) |
 | Bootstrap          | Twitter 推出的前端组件库                        | [Bootstrap (getbootstrap.com)](https://getbootstrap.com/)    |
 | Bootstrap Table    | 增强 Bootstrap 的表格                           | [Bootstrap Table (bootstrap-table.com)](https://bootstrap-table.com/) |
 | BootstrapValidator | 基于 Bootstrap 的表单验证插件，**不更新维护了** | [nghuuphuoc/bootstrapvalidator (github.com)](https://github.com/nghuuphuoc/bootstrapvalidator/) |
 | jQuery             | JavaScript 的封装库                             | [jQuery](https://jquery.com/)                                |
+| ECharts            | 一个基于 JavaScript 的开源可视化图表库          | [Apache ECharts](https://echarts.apache.org/zh/index.html)   |
 
 
 
@@ -90,5 +89,5 @@ Spring Boot 支持两种格式的配置文件：默认的 `application.propertie
 
 ### 补充
 
-
-
+* "版本任你发，我用 Java 8"。现在 JDK 16 都发布了，目前的 LTS 是 Java 11，建议换用 Java 11。
+* 模板引擎 Thymeleaf 性能不好，建议使用 Beetl：[Beetl 官网 (ibeetl.com)](http://ibeetl.com/)。根据其官网说明：Beetl 远超过主流 java 模板引擎性能(引擎性能 5-6 倍于freemaker，2 倍于 SP)！！！
