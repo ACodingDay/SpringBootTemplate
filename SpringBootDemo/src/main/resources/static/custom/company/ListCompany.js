@@ -25,7 +25,7 @@ require(
                         })
                     }
                 };
-                // 数据列表配置
+                // 数据表格配置
                 $('#tb_company').bootstrapTable({
                     // 请求后台的 URL 路径，之前简单查询就用 findAllSimplePageMap
                     url: '/CompanyModule/queryDynamically',

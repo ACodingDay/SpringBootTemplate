@@ -25,7 +25,8 @@ require.config({
         bootstrap_validator:['https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min'],
         bootstrap_validator_CN:['https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/language/zh_CN.min'],
         jqueryform:['https://cdn.bootcdn.net/ajax/libs/jquery.form/4.3.0/jquery.form.min'],
-        jqueryupload:['/libs/jquery.upload/jQuery.upload.min']
+        jqueryupload:['/libs/jquery.upload/jQuery.upload.min'],
+        zTree:['/libs/zTreeV3/js/jquery.ztree.all','https://cdn.bootcdn.net/ajax/libs/zTree.v3/3.5.42/js/jquery.ztree.all']
     },
     // 配置 JS 组件的版本
     map:{
@@ -69,6 +70,9 @@ require.config({
         },
         jqueryupload: {
             deps:['jquery','css!/libs/jquery.upload/upload.css']
+        },
+        zTree: {
+            deps:['jquery','css!/libs/zTreeV3/css/metroStyle/metroStyle.css']
         }
     }
 })

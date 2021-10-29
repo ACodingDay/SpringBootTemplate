@@ -1,5 +1,6 @@
 package com.yyt.springbootdemo.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.yyt.springbootdemo.domain.Company;
 import com.yyt.springbootdemo.repository.CompanyRepo;
 import com.yyt.springbootdemo.service.CompanyService;
@@ -32,13 +33,13 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public void delete(String uuid) {
         companyRepo.deleteById(uuid);
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public void update(Company company) {
         companyRepo.save(company);
     }
@@ -55,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public void updateByName(String comaddress, String comname) {
         companyRepo.updateByName(comaddress, comname);
     }
@@ -78,7 +79,7 @@ public class CompanyServiceImpl implements CompanyService{
         Specification<Company> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             // 设置查询条件
-            if (!"".equals(reqMap.get("comname").toString())){
+            if (!StrUtil.hasEmpty(reqMap.get("comname").toString())){
                 // 公司名称，模糊查询 like，前后都加 % 就是全模糊
                 predicates.add(criteriaBuilder.like(root.get("comname"), "%"+reqMap.get("comname").toString()+"%"));
             }

@@ -26,9 +26,9 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/CompanyModule")
-public class CompanyCtl {
+public class CompanyCtrl {
     // 业务层注入
-    @Resource
+    @Resource(name = "companyService")
     private CompanyService csi;
 
     @Autowired
