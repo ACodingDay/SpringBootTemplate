@@ -90,4 +90,4 @@ Spring Boot 支持两种格式的配置文件：默认的 `application.propertie
 ### 补充
 
 * "版本任你发，我用 Java 8"。现在 JDK 16 都发布了，目前的 LTS 是 Java 11，建议换用 Java 11。
-* 模板引擎 Thymeleaf 性能不好，建议使用 Beetl：[Beetl 官网 (ibeetl.com)](http://ibeetl.com/)。根据其官网说明：Beetl 远超过主流 java 模板引擎性能(引擎性能 5-6 倍于freemaker，2 倍于 SP)！！！
+* 模板引擎 Thymeleaf 性能不好，建议使用 Beetl：[Beetl 官网 (ibeetl.com)](http://ibeetl.com/)。根据其官网说明：Beetl 远超过主流 java 模板引擎性能(引擎性能 5-6 倍于 freemaker，2 倍于 JSP)！！！
