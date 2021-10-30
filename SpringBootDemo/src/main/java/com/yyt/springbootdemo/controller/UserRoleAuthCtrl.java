@@ -154,7 +154,7 @@ public class UserRoleAuthCtrl {
     @ResponseBody
     public String validateMobile(@RequestParam String usermobile){
         // 验证手机号是否唯一
-        boolean result = sus.validateUsername(usermobile);
+        boolean result = sus.validateMobile(usermobile);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("valid", result);
         return jsonObject.toJSONString();

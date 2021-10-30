@@ -16,47 +16,47 @@
 <div class="container">
     <!-- 表单 水平布局 -->
     <form class="form-horizontal" id="SysUserForm" method="post">
-        <div class="form-group row" style="margin-top: 20px;">
-            <label for="inputUserName" class="col-sm-2 col-md-2 text-right control-label">账号名称</label>
+        <div class="form-group form-group-lg row" style="margin-top: 20px;">
+            <label for="username" class="col-sm-2 col-md-2 text-right control-label">账号名称</label>
             <div class="col-sm-10 col-md-10">
-                <input type="text" class="form-control" id="inputUserName" name="inputUserName" required>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputUserPwd" class="col-sm-2 col-md-2 text-right control-label">账号密码</label>
+        <div class="form-group form-group-lg row">
+            <label for="password" class="col-sm-2 col-md-2 text-right control-label">账号密码</label>
             <div class="col-sm-10 col-md-10">
-                <input type="password" class="form-control" id="inputUserPwd" name="inputUserPwd"
+                <input type="password" class="form-control" id="password" name="password"
                        placeholder="密码长度需要 6 位以上" required>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputUserEmail" class="col-sm-2 col-md-2 text-right control-label">账号邮箱</label>
+        <div class="form-group form-group-lg row">
+            <label for="useremail" class="col-sm-2 col-md-2 text-right control-label">账号邮箱</label>
             <div class="col-sm-10 col-md-10">
-                <input type="email" class="form-control" id="inputUserEmail" name="inputUserEmail" required>
+                <input type="email" class="form-control" id="useremail" name="useremail" required>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputUserPhone" class="col-sm-2 col-md-2 text-right control-label">账号手机</label>
+        <div class="form-group form-group-lg row">
+            <label for="usermobile" class="col-sm-2 col-md-2 text-right control-label">账号手机</label>
             <div class="col-sm-10 col-md-10">
-                <input type="tel" class="form-control" id="inputUserPhone" name="inputUserPhone" required>
+                <input type="tel" class="form-control" id="usermobile" name="usermobile" required>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputUserRoleId" class="col-sm-2 col-md-2 text-right control-label">对应角色</label>
+        <div class="form-group form-group-lg row">
+            <label for="sysroleid" class="col-sm-2 col-md-2 text-right control-label">对应角色</label>
             <div class="col-sm-10 col-md-10">
                 <!-- 下拉列表 -->
-                <select class="form-control" id="inputUserRoleId" name="inputUserRoleId" required></select>
+                <select class="form-control" id="sysroleid" name="sysroleid" required></select>
             </div>
         </div>
-        <div class="row" style="margin-top: 20px;"></div>
+        <div class="row" style="margin-top: 50px;"></div>
         <!-- 按钮 -->
         <div class="form-group text-center row">
             <div class="col-sm-6">
-                <button type="reset" class="btn btn-warning">重 置</button>
+                <button type="reset" class="btn btn-warning btn-lg">重 置</button>
             </div>
             <div class="col-sm-6">
                 <!-- 异步提交，不要填写 type="submit" -->
-                <button type="button" id="btn_SaveAddSysUser" class="btn btn-primary">提 交</button>
+                <button type="button" id="btn_SaveAddSysUser" class="btn btn-primary btn-lg">提 交</button>
             </div>
         </div>
     </form>

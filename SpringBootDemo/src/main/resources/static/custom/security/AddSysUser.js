@@ -10,7 +10,6 @@ require(
             ['jquery', 'bootstrap3', 'bootstrap_validator', 'bootstrap_validator_CN', 'jqueryform'],
             function ($) {
                 // 此处定义自己的脚本
-                const form = $("#SysUserForm");
                 // 下拉列表的数据
                 $.ajax({
                     url: '/security/findAllRoles',
@@ -21,20 +20,20 @@ require(
                         for (var i = 0; i < data.length; i++) {
                             options += '<option value="' + data[i].uuid + '">' + data[i].rolename + '</option>';
                         }
-                        $("#inputUserRoleId").html(options);
+                        $("#sysroleid").html(options);
                     }
                 });
 
                 // 验证表单数据
                 $(document).ready(function(){
-                    form.bootstrapValidator({
+                    $("#SysUserForm").bootstrapValidator({
                         feedbackIcons: {
                             valid: 'fas fa-check',
                             invalid: 'fas fa-times',
                             validating: 'fas fa-hourglass-half'
                         },
                         fields: {
-                            inputUserName: {
+                            username: {
                                 message: '请输入账号名称',
                                 validators: {
                                     notEmpty: {
@@ -60,7 +59,7 @@ require(
                                     }
                                 }
                             },
-                            inputUserPwd: {
+                            password: {
                                 message: '请输入账号密码',
                                 validators: {
                                     notEmpty: {
@@ -72,7 +71,7 @@ require(
                                     }
                                 }
                             },
-                            inputUserEmail: {
+                            useremail: {
                                 validators: {
                                     notEmpty: {
                                         message: '账号邮箱不能为空'
@@ -91,7 +90,7 @@ require(
                                     }
                                 }
                             },
-                            inputUserPhone: {
+                            usermobile: {
                                 message: '请输入账号的手机号',
                                 validators: {
                                     notEmpty: {
@@ -119,7 +118,7 @@ require(
                 // 异步提交表单数据
                 $("#btn_SaveAddSysUser").bind("click", function(){
                     // 获取表单对象
-                    var bootstrapValidator = form.data('bootstrapValidator');
+                    var bootstrapValidator = $("#SysUserForm").data('bootstrapValidator');
                     // 手动触发验证
                     bootstrapValidator.validate();
                     // 全部通过验证才能提交
@@ -136,7 +135,7 @@ require(
                             // 成功提交后，清空原有表单数据
                             resetForm: true
                         };
-                        form.ajaxSubmit(options);
+                        $("#SysUserForm").ajaxSubmit(options);
                     }
                 });
 

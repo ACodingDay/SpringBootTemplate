@@ -36,6 +36,7 @@ public class SysUserServiceImpl implements SysUserService {
     public void save(SysUser sysUser) {
         // 密码加密，不使用 MD5
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // rawPassword cannot be null
         String hashPassword = passwordEncoder.encode(sysUser.getPassword());
         sysUser.setPassword(hashPassword);
         // 根据账号对应的角色 id，得到角色信息
@@ -58,9 +59,9 @@ public class SysUserServiceImpl implements SysUserService {
             List<Predicate> predicates = new ArrayList<>();
             // 不为 null 且不是空字符串
             // !(reqMap.get("username") == null || "".equals(reqMap.get("username").toString()))
-            if (reqMap.get("username") != null && !StrUtil.hasEmpty(reqMap.get("username").toString())){
+            if (reqMap.get("username") != null && !StrUtil.hasEmpty(reqMap.get("username").toString())) {
                 // 账号名称，模糊查询 like，前后都加 % 就是全模糊
-                predicates.add(criteriaBuilder.like(root.get("username"), "%" + reqMap.get("username").toString()+"%"));
+                predicates.add(criteriaBuilder.like(root.get("username"), "%" + reqMap.get("username").toString() + "%"));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
@@ -69,20 +70,23 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public boolean validateUsername(String username) {
-        int num = suRepo.validateUsername(username);
-        // 等于 0 就返回 true，不等就返回 false
+        Integer num = suRepo.validateUsername(username);
+        // 等于 0 就返回 true，不等 0 就返回 false
         return num == 0;
     }
 
     @Override
-    public boolean validateEmail(String email) {
-        int num = suRepo.validateEmail(email);
+    public boolean validateEmail(String inputUserEmail) {
+        // Null return value from advice does not match primitive return type for
+        // 没数据就会返回 NULL，转换 int 会出错 ？？
+        Integer num = suRepo.validateEmail(inputUserEmail);
+        // 等于 0 就返回 true，不等 0 就返回 false
         return num == 0;
     }
 
     @Override
     public boolean validateMobile(String mobile) {
-        int num = suRepo.validateMobile(mobile);
+        Integer num = suRepo.validateMobile(mobile);
         return num == 0;
     }
 }
