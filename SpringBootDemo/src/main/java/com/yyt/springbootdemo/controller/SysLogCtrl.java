@@ -32,7 +32,6 @@ public class SysLogCtrl {
     private SysLogService slService;
 
     @RequestMapping("/listLog")
-    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了操作日志页面")
     public String showIndexPage() {
         return "log/ListLog.html";
     }
@@ -45,10 +44,10 @@ public class SysLogCtrl {
         int page = 0;
         int size = 3;
         if (reqMap != null) {
-            if (reqMap.get("page").toString() != null) {
+            if (reqMap.get("page") != null) {
                 page = Integer.parseInt(reqMap.get("page").toString());
             }
-            if (reqMap.get("size").toString() != null) {
+            if (reqMap.get("size") != null) {
                 size = Integer.parseInt(reqMap.get("size").toString());
             }
         }

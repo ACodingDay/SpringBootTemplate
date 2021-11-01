@@ -40,7 +40,6 @@ public class UserRoleAuthCtrl {
     private SysUserService sus;
 
     @RequestMapping(value = "/ListUserRoleAuth")
-    @LogRecordAnnotation(operateType="其他", operateDesc="删除了一个角色")
     public String findAllRole(Model model) {
         /**
          * 查询全部数据，然后跳转页面
@@ -170,7 +169,6 @@ public class UserRoleAuthCtrl {
     }
 
     @RequestMapping(value = "/toAddSysUser")
-    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了新增用户表单")
     public String toAddSysUser() {
         // 跳转到增加用户界面
         return "/security/AddSysUser.html";

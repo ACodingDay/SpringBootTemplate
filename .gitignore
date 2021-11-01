@@ -3,6 +3,7 @@
 
 # log file 不需要提交的任意包含后缀名为log的文件
 *.log
+*.gz
 
 # 忽略所有.svn目录
 .svn/

@@ -24,8 +24,6 @@ require(
                     //toolbar: '#toolbar',
                     // 默认缓存 ajax请求，设为 false 则禁用缓存
                     cache: false,
-                    // 显示分页按钮
-                    showPaginationSwitch: true,
                     // 默认为false隐藏刷新按钮，设为true显示
                     showRefresh: false,
                     // 默认为 false，表格的底部工具栏不会显示分页条
@@ -50,8 +48,6 @@ require(
                     uniqueId: "uuid",
                     // 默认为true显示表头，设为false隐藏
                     showHeader: true,
-                    // 默认为false隐藏表尾，设为true显示
-                    //showFooter: true,
                     // 开启精确搜索
                     strictSearch: true,
                     // 默认为false不显示所有的列，设为true显示
@@ -60,8 +56,6 @@ require(
                     showToggle: false,
                     // 显示全屏按钮
                     showFullscreen: false,
-                    // 按钮的颜色样式
-                    //buttonsClass: 'primary',
                     // 默认false，设为 true显示card view（卡片视图）
                     cardView: false,
                     clickToSelect: true,

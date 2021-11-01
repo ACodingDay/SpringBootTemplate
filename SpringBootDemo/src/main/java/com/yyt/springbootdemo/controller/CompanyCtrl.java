@@ -132,10 +132,10 @@ public class CompanyCtrl {
         int page = 0;
         int size = 3;
         if (reqMap != null) {
-            if (reqMap.get("page").toString() != null) {
+            if (reqMap.get("page") != null) {
                 page = Integer.parseInt(reqMap.get("page").toString());
             }
-            if (reqMap.get("size").toString() != null) {
+            if (reqMap.get("size") != null) {
                 size = Integer.parseInt(reqMap.get("size").toString());
             }
         }
@@ -193,21 +193,18 @@ public class CompanyCtrl {
     }
 
     @RequestMapping("/listCompany")
-    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了公司数据表格页面")
     public String showTemplatesHtml() {
         // 返回公司信息表格
         return "/company/ListCompany.html";
     }
 
     @RequestMapping("/addCompany")
-    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了新增公司表单")
     public String addCompanyHtml() {
         // 返回新增公司信息表单
         return "/company/AddCompany.html";
     }
 
     @RequestMapping("/eChartsCompany")
-    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了公司数据图表页面")
     public String chartCompanyHtml() {
         // 返回公司信息图表
         return "/company/EChartsCompany.html";

@@ -7,6 +7,7 @@ import com.yyt.springbootdemo.domain.SysLog;
 import com.yyt.springbootdemo.domain.SysUser;
 import com.yyt.springbootdemo.service.SysLogService;
 import com.yyt.springbootdemo.utils.FilterEntityUtil;
+import com.yyt.springbootdemo.utils.IpUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -36,7 +37,7 @@ public class LogRecordAspect {
     private SysLogService slService;
 
     // 给切入点织入自定义的属性
-    @Pointcut("@annotation(LogRecordAnnotation)")
+    @Pointcut("@annotation(com.yyt.springbootdemo.annotation.LogRecordAnnotation)")
     public void logAspect(){}
 
     // 获取自定义的属性
@@ -86,12 +87,13 @@ public class LogRecordAspect {
         slog.setOperateTime(now);
 
         // 设置当前 IP
-        slog.setIpAddr(request.getRemoteAddr());
+        // request.getRemoteAddr()
+        slog.setIpAddr(IpUtil.getIpAddr(request));
 
         // 获取 User Agent 信息
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         // 设置浏览器名称+版本
-        slog.setBrowserType(userAgent.getBrowser().toString() + userAgent.getBrowserVersion());
+        slog.setBrowserType(userAgent.getBrowser().toString() + "-" + userAgent.getBrowserVersion());
         // 设置操作系统
         slog.setOsType(userAgent.getOperatingSystem().toString());
 
