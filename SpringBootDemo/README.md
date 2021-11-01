@@ -24,10 +24,6 @@ Echarts：[ECharts 教程_w3cschool](https://www.w3cschool.cn/echarts_tutorial/)
 
 
 
-
-
-
-
 ## Bootstrap
 
 中文文档：[简介 · Bootstrap v4 中文文档 v4.6 | Bootstrap 中文网 (bootcss.com)](https://v4.bootcss.com/docs/getting-started/introduction/)
@@ -52,8 +48,6 @@ CDN 加速：[BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务](
 
 
 
-
-
 ## Spring Boot
 
 ### 配置文件
@@ -62,12 +56,9 @@ Spring 的优化版，“约定优于配置”，只需要少量的配置，其�
 
 项目初始化时，就存在 `application.properties` 默认配置文件，但我们一般使用 `application.yml` 这种配置文件。
 
-
-
 如果在配置文件中遇到 `Cannot resolve configuration property 'spring.thymeleaf.content-type' `，说明不能正常解析这个属性，那么可能过时了，或者可能废弃了。
 
 > 参考：[yml报错：deprecated configuration property spring.thymeleaf.content-type_古柏树下的博客-CSDN博客](https://blog.csdn.net/sinat_29774479/article/details/82622436)
-
 
 
 多环境配置：
@@ -75,7 +66,6 @@ Spring 的优化版，“约定优于配置”，只需要少量的配置，其�
 * 开发环境：application-dev.yml
 * 生产环境：application-prod.yml
 * 测试环境：application-test.yml
-
 
 
 `application-dev.yml` 配置文件：
@@ -126,9 +116,7 @@ spring:
 ```
 
 
-
 > 参考：[springboot配置之Profile多环境支持 - 西西嘛呦 - 博客园 (cnblogs.com)](https://www.cnblogs.com/xiximayou/p/12248340.html)
-
 
 
 工具网站：
@@ -142,7 +130,6 @@ spring:
 Spring Boot 默认使用 LogBack 日志系统，日志的级别有7个：TRACE，DEBUG，INFO，WARN，ERROR，FATAL，OFF。
 
 日志级别从低到高为: TRACE < DEBUG < INFO（默认） < WARN < ERROR < FATAL< OFF 。
-
 
 
 一个项目可能有很多模块，设置让 `com.yyt.springBootDemo` 这个模块的输出日志为 warn 级别。
@@ -164,136 +151,7 @@ logging:
 ```
 
 
-
 > 参考：[一文了解SpringBoot的日志管理 | 带你读《SpringBoot实战教程》之七-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/762856)
-
-
-
-### AOP 日志
-
-系统日志数据表：syslog
-
-| 编号 | 名称         | 字段名        | 类型          | 说明                      |
-| ---- | ------------ | ------------- | ------------- | ------------------------- |
-| 1    | UUID         | uuid          | char(32)      | 主键                      |
-| 2    | 账号名称     | username      | varchar(100)  |                           |
-| 3    | 操作时间     | operateTime   | char(19)      | 格式：yyyy-MM-dd HH:mm:ss |
-| 4    | 操作类型     | operateType   | varchar(20)   | 增删查改                  |
-| 5    | 操作说明     | operateDesc   | char(100)     |                           |
-| 6    | 操作详情     | operateDetail | text          | 以 json 格式描述          |
-| 7    | 操作系统类型 | osType        | varchar(20)   |                           |
-| 8    | 浏览器类型   | browserType   | varchar(20)   |                           |
-| 9    | IP 地址      | ipAddr        | varbinary(16) |                           |
-
-
-
-IP 地址，分为 IPv 4 和 IPv 6。
-
-百度来的答案如下：
-
-* IPv 4 最小长度 7 个字符（0.0.0.1），最大长度 15 个字符（255.255.255.255）；所以保存 IPv 4 使用 `varchar(15)` 即可；而保存 IPv 6 使用 `varchar(45)`。
-* 在 **《高性能MySQL》** 第三版中 4.1.7 小节里推荐使用无符号整数存储 IP 地址。
-
-转换函数：
-
-- MySQL 提供了 **INET_ATON()** 和 **INET_NTOA()** 函数，用于 IPv 4 地址在整型和字符串之间的转化。
-- MySQL 还提供了 **INET6_ATON()** 和 **INET6_NTOA()** 函数，用于 IPv 6 地址在整型和字符串之间的转化。
-
-
-
-> 参考：Stack Overflow 上的问答 — [sql - Storing IPv6 Addresses in MySQL - Stack Overflow](https://stackoverflow.com/questions/6964143/storing-ipv6-addresses-in-mysql)
-
-
-
-#### 依赖
-
-Maven 引入 AOP 依赖和工具包 hutool：
-
-```xml
-<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-aop</artifactId>
-    <version>2.5.5</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
-<dependency>
-    <groupId>eu.bitwalker</groupId>
-    <artifactId>UserAgentUtils</artifactId>
-    <version>1.21</version>
-</dependency>
-
-<dependency>
-    <groupId>cn.hutool</groupId>
-    <artifactId>hutool-all</artifactId>
-    <version>5.7.15</version>
-</dependency>
-```
-
-
-
-User-agent-utils 官网：[User-agent-utils | bitwalker.eu](https://www.bitwalker.eu/software/user-agent-utils)
-
-Hutool 官网：[Hutool — 🍬A set of tools that keep Java sweet.](https://www.hutool.cn/)
-
-当然，使用 JavaScript 也可以判断，但有现成的工具类可以用，何必自己写呢？况且自己写的未必好用。
-
-```js
-// 判断移动端还是pc端
-function iswap() {
-    var uA = navigator.userAgent.toLowerCase();
-    var ipad = uA.match(/ipad/i) == "ipad";
-    var iphone = uA.match(/iphone os/i) == "iphone os";
-    var midp = uA.match(/midp/i) == "midp";
-    var uc7 = uA.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-    var uc = uA.match(/ucweb/i) == "ucweb";
-    var android = uA.match(/android/i) == "android";
-    var windowsce = uA.match(/windows ce/i) == "windows ce";
-    var windowsmd = uA.match(/windows mobile/i) == "windows mobile"; 
-    if (!(ipad || iphone || midp || uc7 || uc || android || windowsce || windowsmd)) {
-        // PC 端
-    }else{
-        // 移动端
-    }
-}
-
-// 判断浏览器
-var ua = navigator.userAgent.toLowerCase();
-if (/msie/i.test(ua) && !/opera/.test(ua)) {
-    alert("IE");
-    return;
-} else if (/firefox/i.test(ua)) {
-    alert("Firefox");
-    return;
-} else if (/chrome/i.test(ua) && /webkit/i.test(ua) && /mozilla/i.test(ua)) {
-    alert("Chrome");
-    return;
-} else if (/opera/i.test(ua)) {
-    alert("Opera");
-    return;
-} else if (/iPad/i) {
-    alert("ipad");
-    return;
-}
-if (/webkit/i.test(ua) && !(/chrome/i.test(ua) && /webkit/i.test(ua) && /mozilla/i.test(ua))) {
-    alert("Safari");
-    return;
-} else {
-    alert("unKnow");
-}
-```
-
-
-
-
-
-
-
-> 参考1：[如何优雅地记录操作日志？ - 美团技术团队 (meituan.com)](https://tech.meituan.com/2021/09/16/operational-logbook.html)
->
-> 参考2：[自定义注解实现操作日志记录 - william_zhao - 博客园 (cnblogs.com)](https://www.cnblogs.com/wiliamzhao/p/13230841.html)
-
 
 
 ### JPA
@@ -301,9 +159,7 @@ if (/webkit/i.test(ua) && !(/chrome/i.test(ua) && /webkit/i.test(ua) && /mozilla
 Java 持久层 API，使得应用程序以统一的方式访问持久层，JPA 与 Hibernate 的关系，就像 JDBC 与 JDBC 驱动的关系，JPA 是一套 ORM 规范，而 Hibernate 实现了这个规范。
 
 
-
 Spring Data JPA 是 Spring 提供的一套简化 JPA 开发的框架，可以在不写接口实现的情况下，实现对数据库的访问和操作，同时提供了很多除了 CRUD 之外的功能，如分页、排序、复杂查询等。它的实现有很多，除了 Hibernate，还有 TopLink、OpenJPA......
-
 
 
 配置如下：
@@ -339,7 +195,6 @@ spring:
 ```
 
 
-
 注意，数据库要预先建好，因为 hibernate 只会建表，不会建库。
 
 其中，关于 hibernate 的 `ddl-auto` 参数说明：
@@ -350,19 +205,13 @@ spring:
 * ddl-auto： validate —— 运行程序会校验数据与数据库的字段类型是否相同，不同会报错。
 
 
-
 > 参考：[Spring Boot - JPA配置使用_mxjesse的博客-CSDN博客_jpa配置](https://blog.csdn.net/mxjesse/article/details/80558970)
-
-
 
 
 
 ### 数据库连接池
 
 Druid：阿里巴巴开发的数据库连接池。
-
-
-
 
 
 ### 注解
@@ -377,8 +226,6 @@ Druid：阿里巴巴开发的数据库连接池。
 
 
 
-
-
 #### 业务层
 
 `@Resource`：默认 byName 注入的方式，**适用于接口只能有一个实现类**，名称是 @Service 注解中标定的名称，如果通过 byName 的方式匹配不到，再按 byType 的方式去匹配。如 @Resource(name="companyService")，这里的 "companyService" 是业务层实现类里面的 @Service 注解中标定的名称。
@@ -386,8 +233,6 @@ Druid：阿里巴巴开发的数据库连接池。
 `@Qualifier`：byName 注入的方式，但名称是类名，**适用于接口有多个实现类的场景**，如 @Qualifier(name="CompanyService")。
 
 `@Autowired`：byType 注入方式，**要求接口只能有一个实现类**，Spring 会按 byType 的方式寻找接口的实现类，如果有多个实现类，Spring 不知道要引入哪个类，自然会报错。
-
-
 
 
 
@@ -403,8 +248,6 @@ Druid：阿里巴巴开发的数据库连接池。
 
 
 
-
-
 #### 参数接收
 
 `JavaBean 对象`：没有任何注解，直接通过 JavaBean 对象来封装表单参数或者是请求 URL 路径中的参数。
@@ -416,9 +259,6 @@ Druid：阿里巴巴开发的数据库连接池。
 `@RequestBody`：直接以 String 方式接收前端以 POST 方式传过来的 JSON 数据，在需要传递大量参数时很有用。类似于 JavaBean 对象，差别在于：这种方式传递参数，不需要 JavaBean 对象来封装参数，适用于多太条件查询场景，一般用 Map 集合来处理接收的参数。
 
 
-
-
-
 ### 页面跳转
 
 在 `resources` 目录下的 `public` 文件夹中的页面是公开权限的，能随意访问的页面（例如：网站主页）。
@@ -426,7 +266,6 @@ Druid：阿里巴巴开发的数据库连接池。
 `static` 文件夹中的资源一般是 CSS、JS、图片这种公共静态资源；其他页面中引用此文件夹下的资源都是直接访问即可。
 
 > 参考：[SpringBoot中项目中static目录下的前端css/js不起作用_明天天明~的博客-CSDN博客](https://blog.csdn.net/qq_41950447/article/details/112465106)
-
 
 
 `templates` 文件夹中的资源是需要 controller 控制跳转的，不可以直接访问的页面，直接访问会显示Whitelabel Error Page（例如：登录后才能访问的）。
@@ -446,9 +285,6 @@ public String showPrivateHtml(){
 ```
 
 
-
-
-
 ### RESTful
 
 这是一种设计风格，不是硬性要求。如果不是从资源考虑，对缓存的要求也不高，那就不要采用，因为多条件查询的场景下很麻烦。
@@ -459,17 +295,13 @@ public String showPrivateHtml(){
 * DeleteMapping 对应 删
 
 
-
 > 参考：[RESTful API接口设计标准及规范；_时光偏执的博客-CSDN博客](https://blog.csdn.net/qq_41606973/article/details/86352787)
-
 
 
 RESTful 风格的接口与传统的接口有些许区别：
 
 * 传递形式：不能带参数名称，直接在 URL 后面带参数值就行。
 * 中文转码：Postman 不能直接接传中文值，需要右键转码。
-
-
 
 
 
@@ -491,8 +323,7 @@ RESTful 风格的接口与传统的接口有些许区别：
   * 模板的自身脚本
 
 
-
-
+    
 
 ## Thymeleaf
 
@@ -512,13 +343,7 @@ Thymeleaf 是一种用于Web和独立环境的现代服务器端的 Java 模板�
 ```
 
 
-
-
-
 > 参考：[Thymeleaf一篇就够了-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/769977)
-
-
-
 
 
 ## Bootstrap-table
@@ -526,7 +351,6 @@ Thymeleaf 是一种用于Web和独立环境的现代服务器端的 Java 模板�
 Bootstrap 的表格功能不够强大，需要一个 `bootstrap-table` 插件增强它。
 
 官网：[Bootstrap Table · An extended table to the integration with some of the most widely used CSS frameworks. (Supports Bootstrap, Semantic UI, Bulma, Material Design, Foundation) (bootstrap-table.com)](https://bootstrap-table.com/)
-
 
 
 > 参考1：[Bootstrap Table API 中文版（完整翻译文档）_Sclifftop - 保安大队长-CSDN博客](https://blog.csdn.net/S_clifftop/article/details/77937356)
@@ -809,8 +633,6 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 ### 树形插件
 
-用于显示权限目录
-
 * zTree 官网：[Home [zTree -- jQuery 树插件\] (treejs.cn)](http://www.treejs.cn/v3/main.php#_zTreeInfo)
 
   CDN 加速：[zTree.v3 (v3.5.42) - jquery tree plugin | BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务](https://www.bootcdn.cn/zTree.v3/)
@@ -823,20 +645,7 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 
 
-### 自定义
 
-* 自定义用户加载类：实现 UserDetailsService 接口；
-* 自定义安全配置类：继承 WebSecurityConfigurerAdapter 类。
-
-权限控制可以通过**注解**或在 **Thymeleaf 中使用 Spring Security 标签**来实现。
-
-
-
-
-
-
-
-> 参考：[SpringBoot整合SpringSecurity详解，认证授权从未如此简单 - 掘金 (juejin.cn)](https://juejin.cn/post/6882380260227153927)
 
 
 

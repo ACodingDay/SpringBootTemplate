@@ -140,6 +140,12 @@ public class SysAuthServiceImpl implements SysAuthService {
     @Transactional
     public String deleteByChild(int id) {
         SysAuth sysAuth = saRepo.findById(id);
+        // 先批量删除中间表的对应记录
+        List<SysAuth> sysAuthList = saRepo.findAllByPowerName(sysAuth.getPowername() + "%");
+        for(SysAuth sa : sysAuthList){
+            saRepo.deleteMapTableByUuid(sa.getUuid());
+        }
+        // 再从权限表中批量删除节点及其子节点
         saRepo.deleteByName(sysAuth.getPowername() + "%");
         // 为 AOP 日志准备
         return JSONObject.toJSONString(sysAuth);

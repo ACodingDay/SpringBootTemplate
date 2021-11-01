@@ -2,6 +2,7 @@ package com.yyt.springbootdemo.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.yyt.springbootdemo.annotation.LogRecordAnnotation;
 import com.yyt.springbootdemo.domain.SysRole;
 import com.yyt.springbootdemo.domain.SysUser;
 import com.yyt.springbootdemo.domain.Ztree;
@@ -39,6 +40,7 @@ public class UserRoleAuthCtrl {
     private SysUserService sus;
 
     @RequestMapping(value = "/ListUserRoleAuth")
+    @LogRecordAnnotation(operateType="其他", operateDesc="删除了一个角色")
     public String findAllRole(Model model) {
         /**
          * 查询全部数据，然后跳转页面
@@ -50,6 +52,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/listuser")
     @ResponseBody
+    @LogRecordAnnotation(operateType="查询", operateDesc="查询符合要求的账号")
     public String queryDynamically(@RequestBody Map<String, Object> reqMap) {
         // 多条件分页查询
         int page = 0;
@@ -84,6 +87,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/saveRole")
     @ResponseBody
+    @LogRecordAnnotation(operateType="新增", operateDesc="新增了一个角色")
     public String save(SysRole sysRole) {
         // 保存角色
         srs.save(sysRole);
@@ -92,6 +96,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/deleteRole")
     @ResponseBody
+    @LogRecordAnnotation(operateType="删除", operateDesc="删除了一个角色")
     public String delete(String uuid) {
         // 删除角色
         srs.deleteByUUID(uuid);
@@ -101,6 +106,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/saveChildAuth")
     @ResponseBody
+    @LogRecordAnnotation(operateType="新增", operateDesc="新增了一个子权限")
     public String saveChildAuth(@RequestParam int id, String name) {
         // 保存子节点
         return sas.saveChildAuth(id, name);
@@ -108,6 +114,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/deleteByChild")
     @ResponseBody
+    @LogRecordAnnotation(operateType="删除", operateDesc="删除了一个权限以及其所有子权限")
     public String deleteByChild(@RequestParam int id) {
         // 根据 id 删除节点以及其子节点
         sas.deleteByChild(id);
@@ -116,6 +123,7 @@ public class UserRoleAuthCtrl {
 
     @PostMapping("/editRole")
     @ResponseBody
+    @LogRecordAnnotation(operateType="修改", operateDesc="修改了一个角色的权限")
     public String editRole(@RequestParam String uuid, String authinfo) {
         // 保存角色对应的权限信息
         sas.editRole(uuid, authinfo);
@@ -124,6 +132,7 @@ public class UserRoleAuthCtrl {
 
     @RequestMapping("/findAllRoles")
     @ResponseBody
+    @LogRecordAnnotation(operateType="查询", operateDesc="查询了所有角色")
     public List<SysRole> findAllRoles(){
         // 查询全部的角色
         List<SysRole> list = srs.findAll();
@@ -161,6 +170,7 @@ public class UserRoleAuthCtrl {
     }
 
     @RequestMapping(value = "/toAddSysUser")
+    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了新增用户表单")
     public String toAddSysUser() {
         // 跳转到增加用户界面
         return "/security/AddSysUser.html";
@@ -168,6 +178,7 @@ public class UserRoleAuthCtrl {
 
     @RequestMapping("/saveSysUser")
     @ResponseBody
+    @LogRecordAnnotation(operateType="新增", operateDesc="新增了一个系统账号")
     public String saveSysUser(SysUser sysUser){
         // 保存账户
         sus.save(sysUser);

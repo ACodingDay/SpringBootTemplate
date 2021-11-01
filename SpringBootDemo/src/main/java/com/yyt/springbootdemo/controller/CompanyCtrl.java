@@ -1,10 +1,11 @@
 package com.yyt.springbootdemo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yyt.springbootdemo.annotation.LogRecordAnnotation;
 import com.yyt.springbootdemo.domain.Company;
 import com.yyt.springbootdemo.domain.EChartsData;
 import com.yyt.springbootdemo.service.CompanyService;
-import com.yyt.springbootdemo.utils.ReceiveUploadFile;
+import com.yyt.springbootdemo.utils.ReceiveUploadFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,22 +33,25 @@ public class CompanyCtrl {
     private CompanyService csi;
 
     @Autowired
-    private ReceiveUploadFile ruf;
+    private ReceiveUploadFileUtil ruf;
 
     @PostMapping("/save")
     @ResponseBody
+    @LogRecordAnnotation(operateType="新增", operateDesc="新增了一家公司")
     public void save(Company company) {
         csi.save(company);
     }
 
     @GetMapping("/delete")
     @ResponseBody
+    @LogRecordAnnotation(operateType="删除", operateDesc="删除了一家公司")
     public void delete(@RequestParam String uuid) {
         csi.delete(uuid);
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("/findAll")
     @ResponseBody
+    @LogRecordAnnotation(operateType="查询", operateDesc="查询了所有的公司")
     public List<Company> findAll() {
         // 不限制访问方式，GET 或 POST 都可以
         return csi.findAll();
@@ -64,6 +68,7 @@ public class CompanyCtrl {
 
     @PostMapping("/upload")
     @ResponseBody
+    @LogRecordAnnotation(operateType="其他", operateDesc="上传了文件")
     public String uploadFile(@RequestParam MultipartFile file) {
         /**
          * 接收上传文件，返回存储路径名
@@ -121,6 +126,7 @@ public class CompanyCtrl {
 
     @PostMapping("/queryDynamically")
     @ResponseBody
+    @LogRecordAnnotation(operateType="查询", operateDesc="查询符合条件的公司")
     public String queryDynamically(@RequestBody(required = false) Map<String, Object> reqMap) {
         // 多条件分页查询
         int page = 0;
@@ -152,6 +158,7 @@ public class CompanyCtrl {
 
     @PostMapping("/echarts")
     @ResponseBody
+    @LogRecordAnnotation(operateType="查询", operateDesc="查询了公司图表数据")
     public Map<String, List<EChartsData>> echart(){
         /**
          * 为 ECharts 图表展示，准备数据
@@ -186,18 +193,21 @@ public class CompanyCtrl {
     }
 
     @RequestMapping("/listCompany")
+    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了公司数据表格页面")
     public String showTemplatesHtml() {
         // 返回公司信息表格
         return "/company/ListCompany.html";
     }
 
     @RequestMapping("/addCompany")
+    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了新增公司表单")
     public String addCompanyHtml() {
         // 返回新增公司信息表单
         return "/company/AddCompany.html";
     }
 
     @RequestMapping("/eChartsCompany")
+    @LogRecordAnnotation(operateType="其他", operateDesc="浏览了公司数据图表页面")
     public String chartCompanyHtml() {
         // 返回公司信息图表
         return "/company/EChartsCompany.html";

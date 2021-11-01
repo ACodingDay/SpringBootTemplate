@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -60,7 +60,7 @@
                 <!-- 账号数据区域 -->
                 <div class="row">
                     <div class="col-6 text-left"><h4>系统账号</h4></div>
-                    <div class="col-6 text-right">
+                    <div sec:authorize="hasAuthority('系统管理_权限管理_新增账号')" class="col-6 text-right">
                         <!-- 新增账号按钮 -->
                         <button id="btn_addUser" type="button" class="btn btn-success">
                             <i class="fas fa-plus-square"></i> 新增账号
@@ -79,15 +79,15 @@
                     <div class="col-6 text-left"><h4>系统角色</h4></div>
                     <div class="col-6 text-right">
                         <!-- 新增角色按钮 -->
-                        <button id="btn_addRole" type="button" class="btn btn-success">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_新增角色')" id="btn_addRole" type="button" class="btn btn-success">
                             <i class="fas fa-user-plus"></i> 新增角色
                         </button>
                         <!-- 修改角色权限按钮 -->
-                        <button id="btn_assignRole" type="button" class="btn btn-warning">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_权限分配')" id="btn_assignRole" type="button" class="btn btn-warning">
                             <i class="fas fa-user-cog"></i> 权限分配
                         </button>
                         <!-- 删除角色按钮 -->
-                        <button id="btn_delRole" type="button" class="btn btn-danger">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_删除角色')" id="btn_delRole" type="button" class="btn btn-danger">
                             <i class="fas fa-user-minus"></i> 删除角色
                         </button>
                     </div>
@@ -114,13 +114,13 @@
                         <input id="nowname" type="hidden" value="无"/>
                     </div>
                     <div class="col-9 text-right">
-                        <button id="btn_addMainAuth" type="button" class="btn btn-success btn-sm">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_新增一级权限')" id="btn_addMainAuth" type="button" class="btn btn-success btn-sm">
                             <i class="fas fa-plus-square"></i> 新增一级权限
                         </button>
-                        <button id="btn_addAuth" type="button" class="btn btn-info btn-sm">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_新增子权限')" id="btn_addAuth" type="button" class="btn btn-info btn-sm">
                             <i class="far fa-plus-square"></i> 新增子权限
                         </button>
-                        <button id="btn_delAuth" type="button" class="btn btn-danger btn-sm">
+                        <button sec:authorize="hasAuthority('系统管理_权限管理_删除权限')" id="btn_delAuth" type="button" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i> 删除权限
                         </button>
                     </div>

@@ -38,4 +38,13 @@ public interface SysAuthRepo extends JpaRepository<SysAuth, String> {
     @Modifying
     @Query(value = "delete from sysauth where powername like ?1", nativeQuery = true)
     void deleteByName(String name);
+
+    // 根据 name 查找指定的节点以及子节点，用于删除关联表中的记录
+    @Query(value = "select * from sysauth where powername like ?1", nativeQuery = true)
+    List<SysAuth> findAllByPowerName(String name);
+
+    // 根据权限的 uuid 删除角色权限关联表中的对应记录
+    @Modifying
+    @Query(value = "delete from sysrole_sys_auths where sys_auths_uuid=?1", nativeQuery = true)
+    void deleteMapTableByUuid(String uuid);
 }

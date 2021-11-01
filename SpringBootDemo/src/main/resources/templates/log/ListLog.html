@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
+    <title>操作日志表格</title>
+    <!-- RequireJS -->
+    <script type="text/javascript" data-main="/custom/log/ListLog.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="common::commonNav" th:remove="tag"></div>
+        <div th:include="common::commonTop" th:remove="tag"></div>
+    </div>
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- 清除样式 -->
+        <div class="clearfix"></div>
+        <div class="card">
+            <div class="card-header">多条件查询</div>
+            <!-- 自定义搜索条件框 -->
+            <div class="card-body">
+                <form class="form-inline row">
+                    <label for="username"><h4>账号名称：</h4></label>
+                    <input type="text" id="username" name="username" class="form-control"
+                           placeholder="如 admin">
+                    <label for="operateDesc"><h4>操作说明：</h4></label>
+                    <input type="text" id="operateDesc" name="operateDesc" class="form-control"
+                           placeholder="如 500">
+                    <label for="operateType"><h4>操作类型：</h4></label>
+                    <select class="form-control" id="operateType" name="operateType">
+                        <option value="全部">全部</option>
+                        <option value="查询">查询</option>
+                        <option value="新增">新增</option>
+                        <option value="修改">修改</option>
+                        <option value="删除">删除</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <!-- 点击搜索按钮 -->
+                    <button type="button" id="searchLogBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> 搜索
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- 显示操作日志的表格  -->
+                <table id="tb_log" style="cursor: pointer;"></table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

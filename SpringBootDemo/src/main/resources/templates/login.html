@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/images/favicon.ico" type="image/ico"/>
+    <title>Login</title>
+    <!-- RequireJS -->
+    <script type="text/javascript" data-main="/custom/login.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="/libs/bootstrap-4.6.0-dist/css/login.css" rel="stylesheet">
+    <!-- session 过期，跳转到首页并弹出 iframe -->
+    <script type="text/javascript">
+        if (window != top){
+            top.location.href = location.href;
+        }
+    </script>
+</head>
+<body>
+<form class="form-signin" th:action="@{/login}" method="post">
+    <div class="text-center mb-4">
+        <!-- 不知道为啥本地引用 /images/bootstrap-solid.svg 就不显示  -->
+        <img class="mb-4" src="https://v4.bootcss.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">登录界面</h1>
+        <p>Please sign in</p>
+    </div>
+
+    <div class="form-label-group">
+        <input type="text" id="username" name="username" class="form-control"
+               placeholder="Username" required autofocus>
+        <label for="username">Username</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="password" name="password" class="form-control"
+               placeholder="Password" autoComplete="off" required>
+        <label for="password">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_signin">Sign in</button>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2020 - 2021</p>
+</form>
+</body>
+</html>
