@@ -169,6 +169,133 @@ logging:
 
 
 
+### AOP 日志
+
+系统日志数据表：syslog
+
+| 编号 | 名称         | 字段名        | 类型          | 说明                      |
+| ---- | ------------ | ------------- | ------------- | ------------------------- |
+| 1    | UUID         | uuid          | char(32)      | 主键                      |
+| 2    | 账号名称     | username      | varchar(100)  |                           |
+| 3    | 操作时间     | operateTime   | char(19)      | 格式：yyyy-MM-dd HH:mm:ss |
+| 4    | 操作类型     | operateType   | varchar(20)   | 增删查改                  |
+| 5    | 操作说明     | operateDesc   | char(100)     |                           |
+| 6    | 操作详情     | operateDetail | text          | 以 json 格式描述          |
+| 7    | 操作系统类型 | osType        | varchar(20)   |                           |
+| 8    | 浏览器类型   | browserType   | varchar(20)   |                           |
+| 9    | IP 地址      | ipAddr        | varbinary(16) |                           |
+
+
+
+IP 地址，分为 IPv 4 和 IPv 6。
+
+百度来的答案如下：
+
+* IPv 4 最小长度 7 个字符（0.0.0.1），最大长度 15 个字符（255.255.255.255）；所以保存 IPv 4 使用 `varchar(15)` 即可；而保存 IPv 6 使用 `varchar(45)`。
+* 在 **《高性能MySQL》** 第三版中 4.1.7 小节里推荐使用无符号整数存储 IP 地址。
+
+转换函数：
+
+- MySQL 提供了 **INET_ATON()** 和 **INET_NTOA()** 函数，用于 IPv 4 地址在整型和字符串之间的转化。
+- MySQL 还提供了 **INET6_ATON()** 和 **INET6_NTOA()** 函数，用于 IPv 6 地址在整型和字符串之间的转化。
+
+
+
+> 参考：Stack Overflow 上的问答 — [sql - Storing IPv6 Addresses in MySQL - Stack Overflow](https://stackoverflow.com/questions/6964143/storing-ipv6-addresses-in-mysql)
+
+
+
+#### 依赖
+
+Maven 引入 AOP 依赖和工具包 hutool：
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+    <version>2.5.5</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
+<dependency>
+    <groupId>eu.bitwalker</groupId>
+    <artifactId>UserAgentUtils</artifactId>
+    <version>1.21</version>
+</dependency>
+
+<dependency>
+    <groupId>cn.hutool</groupId>
+    <artifactId>hutool-all</artifactId>
+    <version>5.7.15</version>
+</dependency>
+```
+
+
+
+User-agent-utils 官网：[User-agent-utils | bitwalker.eu](https://www.bitwalker.eu/software/user-agent-utils)
+
+Hutool 官网：[Hutool — 🍬A set of tools that keep Java sweet.](https://www.hutool.cn/)
+
+当然，使用 JavaScript 也可以判断，但有现成的工具类可以用，何必自己写呢？况且自己写的未必好用。
+
+```js
+// 判断移动端还是pc端
+function iswap() {
+    var uA = navigator.userAgent.toLowerCase();
+    var ipad = uA.match(/ipad/i) == "ipad";
+    var iphone = uA.match(/iphone os/i) == "iphone os";
+    var midp = uA.match(/midp/i) == "midp";
+    var uc7 = uA.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var uc = uA.match(/ucweb/i) == "ucweb";
+    var android = uA.match(/android/i) == "android";
+    var windowsce = uA.match(/windows ce/i) == "windows ce";
+    var windowsmd = uA.match(/windows mobile/i) == "windows mobile"; 
+    if (!(ipad || iphone || midp || uc7 || uc || android || windowsce || windowsmd)) {
+        // PC 端
+    }else{
+        // 移动端
+    }
+}
+
+// 判断浏览器
+var ua = navigator.userAgent.toLowerCase();
+if (/msie/i.test(ua) && !/opera/.test(ua)) {
+    alert("IE");
+    return;
+} else if (/firefox/i.test(ua)) {
+    alert("Firefox");
+    return;
+} else if (/chrome/i.test(ua) && /webkit/i.test(ua) && /mozilla/i.test(ua)) {
+    alert("Chrome");
+    return;
+} else if (/opera/i.test(ua)) {
+    alert("Opera");
+    return;
+} else if (/iPad/i) {
+    alert("ipad");
+    return;
+}
+if (/webkit/i.test(ua) && !(/chrome/i.test(ua) && /webkit/i.test(ua) && /mozilla/i.test(ua))) {
+    alert("Safari");
+    return;
+} else {
+    alert("unKnow");
+}
+```
+
+
+
+
+
+
+
+> 参考1：[如何优雅地记录操作日志？ - 美团技术团队 (meituan.com)](https://tech.meituan.com/2021/09/16/operational-logbook.html)
+>
+> 参考2：[自定义注解实现操作日志记录 - william_zhao - 博客园 (cnblogs.com)](https://www.cnblogs.com/wiliamzhao/p/13230841.html)
+
+
+
 ### JPA
 
 Java 持久层 API，使得应用程序以统一的方式访问持久层，JPA 与 Hibernate 的关系，就像 JDBC 与 JDBC 驱动的关系，JPA 是一套 ORM 规范，而 Hibernate 实现了这个规范。
@@ -682,6 +809,8 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 ### 树形插件
 
+用于显示权限目录
+
 * zTree 官网：[Home [zTree -- jQuery 树插件\] (treejs.cn)](http://www.treejs.cn/v3/main.php#_zTreeInfo)
 
   CDN 加速：[zTree.v3 (v3.5.42) - jquery tree plugin | BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务](https://www.bootcdn.cn/zTree.v3/)
@@ -694,7 +823,20 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 
 
+### 自定义
 
+* 自定义用户加载类：实现 UserDetailsService 接口；
+* 自定义安全配置类：继承 WebSecurityConfigurerAdapter 类。
+
+权限控制可以通过**注解**或在 **Thymeleaf 中使用 Spring Security 标签**来实现。
+
+
+
+
+
+
+
+> 参考：[SpringBoot整合SpringSecurity详解，认证授权从未如此简单 - 掘金 (juejin.cn)](https://juejin.cn/post/6882380260227153927)
 
 
 

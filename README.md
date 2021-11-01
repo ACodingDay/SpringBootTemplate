@@ -21,15 +21,25 @@ Spring Boot 项目通用模板。
 
 ### 后端
 
-| 名称             | 说明                                                         | 官网                                                         |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| AdminLTE         | 基于 Bootstrap 的开源后台管理模板主题                        | [Free Bootstrap Admin Template](https://adminlte.io/)        |
-| Gentelella Admin | 基于 Bootstrap 的开源后台管理模板主题                        | [ColorlibHQ/gentelella (github.com)](https://github.com/ColorlibHQ/gentelella) |
-| Spring Boot      | Spring 框架的扩展，简化构建配置                              | [Spring Boot](https://spring.io/projects/spring-boot)        |
-| Spring Security  | Spring 家族的安全管理框架                                    | [Spring Security](https://spring.io/projects/spring-security) |
-| Thymeleaf        | Java 模板引擎                                                | [Thymeleaf](https://www.thymeleaf.org/)                      |
-| Lombok           | 提供一些注解，消除冗长的样板式代码                           | [Project Lombok](https://projectlombok.org/)                 |
-| FastJson         | 阿里巴巴的开源 JSON 解析库，用于 Java Bean 和 JSON 字符串之间的转换 | [alibaba/fastjson (github.com)](https://github.com/alibaba/fastjson) |
+| 名称             | 说明                                  | 官网                                                         |
+| ---------------- | ------------------------------------- | ------------------------------------------------------------ |
+| AdminLTE         | 基于 Bootstrap 的开源后台管理模板主题 | [Free Bootstrap Admin Template](https://adminlte.io/)        |
+| Gentelella Admin | 基于 Bootstrap 的开源后台管理模板主题 | [ColorlibHQ/gentelella (github.com)](https://github.com/ColorlibHQ/gentelella) |
+| Spring Boot      | Spring 框架的扩展，简化构建配置       | [Spring Boot](https://spring.io/projects/spring-boot)        |
+| Spring Security  | Spring 家族的安全管理框架             | [Spring Security](https://spring.io/projects/spring-security) |
+| Thymeleaf        | Java 模板引擎                         | [Thymeleaf](https://www.thymeleaf.org/)                      |
+
+
+
+### 工具
+
+| 名称     | 说明                                                         | 官网                                                         |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| CHINER   | 以前叫 **PDMan**，是一款开源免费的数据库模型建模工具         | [pdman (gitee.com)](https://gitee.com/robergroup/pdman/)     |
+| Postman  | Google 开发的一款功能强大的测试 API 与请求的工具             | [Postman](https://www.postman.com/)                          |
+| Lombok   | 提供一些注解，消除冗长的样板式代码                           | [Project Lombok](https://projectlombok.org/)                 |
+| FastJson | 阿里巴巴的开源 JSON 解析库，用于 Java Bean 和 JSON 字符串之间的转换 | [alibaba/fastjson (github.com)](https://github.com/alibaba/fastjson) |
+| Hutool   | 一个小而全的 Java 工具类库                                   | [Hutool — 🍬A set of tools that keep Java sweet.](https://www.hutool.cn/) |
 
 
 
@@ -90,4 +100,6 @@ Spring Boot 支持两种格式的配置文件：默认的 `application.propertie
 ### 补充
 
 * "版本任你发，我用 Java 8"。现在 JDK 16 都发布了，目前的 LTS 是 Java 11，建议换用 Java 11。
+* Spring Security 与 JWT([JSON Web Tokens - jwt.io](https://jwt.io/)) 搭配使用，可实现的功能更强。
 * 模板引擎 Thymeleaf 性能不好，建议使用 Beetl：[Beetl 官网 (ibeetl.com)](http://ibeetl.com/)。根据其官网说明：Beetl 远超过主流 java 模板引擎性能(引擎性能 5-6 倍于 freemaker，2 倍于 JSP)！！！
+* 
