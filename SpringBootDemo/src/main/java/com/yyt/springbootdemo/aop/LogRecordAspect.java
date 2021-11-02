@@ -14,6 +14,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,9 +29,11 @@ import java.util.Objects;
  * @date 2021年11月01日 16:16
  * 注解 @Aspect 标注增强处理类（切面类）
  * 注解 @Component 表示交由 Spring 容器管理
+ * 注解 @Profile 表示指定在开发环境或者测试环境中使用
  */
 @Aspect
 @Component
+@Profile({"dev", "test"})
 public class LogRecordAspect {
 
     @Autowired
@@ -93,7 +96,7 @@ public class LogRecordAspect {
         // 获取 User Agent 信息
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         // 设置浏览器名称+版本
-        slog.setBrowserType(userAgent.getBrowser().toString() + "-" + userAgent.getBrowserVersion());
+        slog.setBrowserType(userAgent.getBrowser().toString() + "/" + userAgent.getBrowserVersion());
         // 设置操作系统
         slog.setOsType(userAgent.getOperatingSystem().toString());
 
@@ -108,12 +111,14 @@ public class LogRecordAspect {
         // 目标方法本身的
         Object proceed = point.proceed();
         // 转换为 JSON 字符串
-        String strInfo = (String) proceed;
+        // class java.util.HashMap cannot be cast to class java.lang.String
+        String strInfo = proceed.toString();
 
         // 操作详情
         Object[] args = point.getArgs();
         String strOperateType = slog.getOperateType();
         if(strOperateType.contains("查询") || strOperateType.contains("其他")){
+            // java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
             slog.setOperateDetail(JSON.toJSONString(args[0]));
             // 保存
             slService.save(slog);

@@ -2,7 +2,6 @@ package com.yyt.springbootdemo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yyt.springbootdemo.annotation.LogRecordAnnotation;
-import com.yyt.springbootdemo.domain.Company;
 import com.yyt.springbootdemo.domain.SysLog;
 import com.yyt.springbootdemo.service.SysLogService;
 import org.springframework.data.domain.Page;

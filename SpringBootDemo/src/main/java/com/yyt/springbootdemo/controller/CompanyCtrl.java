@@ -158,7 +158,6 @@ public class CompanyCtrl {
 
     @PostMapping("/echarts")
     @ResponseBody
-    @LogRecordAnnotation(operateType="查询", operateDesc="查询了公司图表数据")
     public Map<String, List<EChartsData>> echart(){
         /**
          * 为 ECharts 图表展示，准备数据
@@ -189,25 +188,25 @@ public class CompanyCtrl {
     @RequestMapping("/showP2")
     public String showPrivateHtml() {
         // 测试返回安全文件夹 templates 中的页面
-        return "/mydemo1.html";
+        return "mydemo1.html";
     }
 
     @RequestMapping("/listCompany")
     public String showTemplatesHtml() {
         // 返回公司信息表格
-        return "/company/ListCompany.html";
+        return "company/ListCompany.html";
     }
 
     @RequestMapping("/addCompany")
     public String addCompanyHtml() {
         // 返回新增公司信息表单
-        return "/company/AddCompany.html";
+        return "company/AddCompany.html";
     }
 
     @RequestMapping("/eChartsCompany")
     public String chartCompanyHtml() {
         // 返回公司信息图表
-        return "/company/EChartsCompany.html";
+        return "company/EChartsCompany.html";
     }
 
     // RESTful 风格接口

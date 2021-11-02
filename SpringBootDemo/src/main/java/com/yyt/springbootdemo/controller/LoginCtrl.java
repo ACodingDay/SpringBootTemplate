@@ -14,13 +14,13 @@ public class LoginCtrl {
     @RequestMapping(value = "/login")
     public String login() {
         // 登录界面
-        return "/login.html";
+        return "login.html";
     }
 
     @RequestMapping(value = "/index")
     @LogRecordAnnotation(operateType="登录", operateDesc="用户登录后台管理系统")
     public String index() {
         // 首页界面
-        return "/index.html";
+        return "index.html";
     }
 }

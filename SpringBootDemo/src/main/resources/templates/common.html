@@ -89,6 +89,7 @@
                                     <li sec:authorize="hasAuthority('公司管理_公司列表')"><a th:href="@{/CompanyModule/listCompany}">公司表格</a></li>
                                     <li sec:authorize="hasAuthority('公司管理_公司图表')"><a th:href="@{/CompanyModule/eChartsCompany}">公司图表</a></li>
                                     <li><a th:href="@{/LogModule/listLog}">操作日志表格</a></li>
+                                    <li><a th:href="@{/CompanyReport/showHtml}">公司报表</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fas fa-chart-bar"></i> Data Presentation <span

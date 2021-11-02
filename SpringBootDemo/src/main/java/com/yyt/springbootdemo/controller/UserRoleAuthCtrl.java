@@ -46,7 +46,7 @@ public class UserRoleAuthCtrl {
          */
         List<SysRole> list = srs.findAll();
         model.addAttribute("sysRoles", list);
-        return "/security/ListUserRoleAuth.html";
+        return "security/ListUserRoleAuth.html";
     }
 
     @PostMapping("/listuser")
@@ -171,7 +171,7 @@ public class UserRoleAuthCtrl {
     @RequestMapping(value = "/toAddSysUser")
     public String toAddSysUser() {
         // 跳转到增加用户界面
-        return "/security/AddSysUser.html";
+        return "security/AddSysUser.html";
     }
 
     @RequestMapping("/saveSysUser")

@@ -154,6 +154,68 @@ logging:
 > 参考：[一文了解SpringBoot的日志管理 | 带你读《SpringBoot实战教程》之七-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/762856)
 
 
+
+### AOP
+
+"**在 AOP 方式中，可以反过来将日志服务模块化，并以声明的方式将它们应用到需要日志的组件上。**带来的优势就是 Java 类不需要知道日志服务的存在，也不需要考虑相关的代码。"
+
+简单设计操作日志的表结构：`syslog`
+
+| 编号 | 名称         | 字段          | 类型          | 说明                           |
+| ---- | ------------ | ------------- | ------------- | ------------------------------ |
+| 1    | UUID         | uuid          | char(32)      | 主键                           |
+| 2    | 账号名称     | username      | varchar(100)  | 登录用户                       |
+| 3    | 操作时间     | operateTime   | char(19)      | 格式：yyyy-MM-dd HH:mm:ss      |
+| 4    | 操作类型     | operateType   | varchar(20)   | 增 / 删 / 查 / 改              |
+| 5    | 操作简述     | operateDesc   | char(100)     | 简单描述                       |
+| 6    | 操作详情     | operateDetail | text          | 以 JSON 格式返回操作影响的数据 |
+| 7    | 操作系统类型 | osType        | varchar(20)   | 电脑的操作系统                 |
+| 8    | 浏览器类型   | browserType   | varchar(30)   | 浏览器类型+版本号              |
+| 9    | IP 地址      | ipAddr        | varbinary(16) | 兼容存储 IPv4 和 IPv6          |
+
+关于 MySQL 存储 IP 地址用什么字段类型，搜索了一番。
+
+* 因为一个 IPv 4 最小需要 7 个字符，最大需要 15 个字符，所以使用 VARCHAR(15) 即可；对于 IPv 6 最多 45 个字符，使用 VARCHAR(64) 也足够了。
+
+* 使用 int 类型存储 IP 比 varchar 类型存储 IP 地址性能要提升很多，减少不少空间。因为 varchar 是可变长形，需要多余的一个字节存储长度。另外 int 型在逻辑运算上要比 varchar 速度快。而且 MySQL 提供了转换函数：INET_ATON() 和 INET_NTOA()、INET6_ATON() 和 INET6_NTOA()。
+* "you can store them in a binary field with a length of 128 bits (16 bytes, `BINARY(16)` or `VARBINARY(16)`). "
+
+> 参考：[sql - Most efficient way to store IP Address in MySQL - Stack Overflow](https://stackoverflow.com/questions/2542011/most-efficient-way-to-store-ip-address-in-mysql)
+
+
+
+Spring Boot 导入 AOP 依赖、[Hutool — 🍬A set of tools that keep Java sweet.](https://www.hutool.cn/) 工具类、[User-agent-utils | bitwalker.eu](https://www.bitwalker.eu/software/user-agent-utils) 工具类：
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+    <version>2.3.7.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
+<dependency>
+    <groupId>eu.bitwalker</groupId>
+    <artifactId>UserAgentUtils</artifactId>
+    <version>1.21</version>
+</dependency>
+
+<dependency>
+    <groupId>cn.hutool</groupId>
+    <artifactId>hutool-all</artifactId>
+    <version>5.7.15</version>
+</dependency>
+```
+
+
+
+> 参考1：[利用spring aop优雅地实现日志功能 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/258479389)
+>
+> 参考2：[如何优雅地在 Spring Boot 中使用自定义注解，AOP 切面统一打印出入参日志 | 修订版 - 云+社区 - 腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1445631)
+
+
+
 ### JPA
 
 Java 持久层 API，使得应用程序以统一的方式访问持久层，JPA 与 Hibernate 的关系，就像 JDBC 与 JDBC 驱动的关系，JPA 是一套 ORM 规范，而 Hibernate 实现了这个规范。
@@ -259,6 +321,7 @@ Druid：阿里巴巴开发的数据库连接池。
 `@RequestBody`：直接以 String 方式接收前端以 POST 方式传过来的 JSON 数据，在需要传递大量参数时很有用。类似于 JavaBean 对象，差别在于：这种方式传递参数，不需要 JavaBean 对象来封装参数，适用于多太条件查询场景，一般用 Map 集合来处理接收的参数。
 
 
+
 ### 页面跳转
 
 在 `resources` 目录下的 `public` 文件夹中的页面是公开权限的，能随意访问的页面（例如：网站主页）。
@@ -323,7 +386,7 @@ RESTful 风格的接口与传统的接口有些许区别：
   * 模板的自身脚本
 
 
-    
+​    
 
 ## Thymeleaf
 
@@ -344,6 +407,7 @@ Thymeleaf 是一种用于Web和独立环境的现代服务器端的 Java 模板�
 
 
 > 参考：[Thymeleaf一篇就够了-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/769977)
+
 
 
 ## Bootstrap-table
@@ -417,62 +481,6 @@ Spring Boot 工程嵌入的 tomcat 限制了请求的文件大小，默认的上
 
 ```java
 org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field file exceeds its maximum permitted size of 1048576 bytes.
-	at org.apache.tomcat.util.http.fileupload.impl.FileItemStreamImpl$1.raiseError(FileItemStreamImpl.java:114) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.util.http.fileupload.util.LimitedInputStream.checkLimit(LimitedInputStream.java:76) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.util.http.fileupload.util.LimitedInputStream.read(LimitedInputStream.java:135) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at java.base/java.io.FilterInputStream.read(FilterInputStream.java:107) ~[na:na]
-	at org.apache.tomcat.util.http.fileupload.util.Streams.copy(Streams.java:98) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.util.http.fileupload.FileUploadBase.parseRequest(FileUploadBase.java:291) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.connector.Request.parseParts(Request.java:2895) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.connector.Request.getParts(Request.java:2797) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.connector.RequestFacade.getParts(RequestFacade.java:1098) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest.parseRequest(StandardMultipartHttpServletRequest.java:95) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest.<init>(StandardMultipartHttpServletRequest.java:88) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.multipart.support.StandardServletMultipartResolver.resolveMultipart(StandardServletMultipartResolver.java:87) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.checkMultipart(DispatcherServlet.java:1178) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1012) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652) ~[tomcat-embed-core-9.0.41.jar:4.0.FR]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.41.jar:4.0.FR]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124) ~[druid-1.1.22.jar:1.1.22]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.12.RELEASE.jar:5.2.12.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:888) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1597) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) ~[na:na]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.41.jar:9.0.41]
-	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
 ```
 
 
@@ -629,8 +637,6 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 
 
-
-
 ### 树形插件
 
 * zTree 官网：[Home [zTree -- jQuery 树插件\] (treejs.cn)](http://www.treejs.cn/v3/main.php#_zTreeInfo)
@@ -643,17 +649,78 @@ JPA 的 CascadeType 属性 和 FetchType属性：
 
 
 
-
-
-
-
-
-
 ## jasper 报表
+
+其官网：[Jaspersoft Community](https://community.jaspersoft.com/)
+
+JasperReports 是一个开源的报表生成工具。模板设计器推荐使用 Jaspersoft Studio。因为是基于 Eclipse 软件开发的，所以主界面布局很像 Eclipse，也分为商业版和社区版，也有安装版和便携版。下载地址：[Jaspersoft® Studio | Jaspersoft Community](https://community.jaspersoft.com/project/jaspersoft-studio/releases)
+
+流程：
+
+1. 用 Jaspersoft Studio 链接数据库，获取需要使用的数据。
+2. 设计好 xxx.jrxml 文件后，编译为 xxx.jasper 文件。
+3. Spring Boot 引入相关依赖。
+
+
+
+### 依赖
+
+```xml
+<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+<dependency>
+    <groupId>net.sf.jasperreports</groupId>
+    <artifactId>jasperreports</artifactId>
+    <version>6.17.0</version>
+    <!-- 切断对 itext 的依赖 -->
+    <exclusions>
+        <exclusion>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.0.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>5.0.0</version>
+</dependency>
+<!-- 以下可用可不用 -->
+<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.13.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itext-asian</artifactId>
+    <version>5.2.0</version>
+</dependency>
+```
+
+
+
+运行时总是出现错误：**尚未解决**
+
+```java
+java.lang.ClassNotFoundException: net.sf.jasperreports.compilers.ReportExpressionEvaluationData
+```
 
 
 
 
 
 > 参考1：[JasperReport 报表在SpringMVC WEB项目中的应用(JavaBean作为数据源)_嗡汤圆的博客-CSDN博客](https://blog.csdn.net/tzdwsy/article/details/50595313)
+>
+> 参考2：[iText5实现Java生成PDF文件完整版_张小洛的BOLG-CSDN博客_itextpdf](https://blog.csdn.net/weixin_37848710/article/details/89522862)
+>
+> 参考3：[Apache POI基本介绍---入门级_凉拌~玛卡巴卡-CSDN博客_apache poi](https://blog.csdn.net/qq_44316726/article/details/105495959)
 

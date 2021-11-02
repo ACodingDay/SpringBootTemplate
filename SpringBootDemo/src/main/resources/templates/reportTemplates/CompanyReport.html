@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
+    <title>公司业务报表</title>
+    <!-- RequireJS -->
+    <script type="text/javascript" data-main="/custom/report/CompanyReport.js"
+            src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="common::commonNav" th:remove="tag"></div>
+        <div th:include="common::commonTop" th:remove="tag"></div>
+    </div>
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- 清除样式 -->
+        <div class="clearfix"></div>
+        <!-- 工具按钮 -->
+        <div class="card">
+            <div class="card-header">工具按钮</div>
+            <!-- 自定义搜索条件框 -->
+            <div class="card-body">
+                <button id="btn_exportExcel" type="button" class="btn btn-outline-primary">
+                    <i class="fas fa-file-excel"></i> 导出为 Excel
+                </button>
+            </div>
+        </div>
+        <!-- 显示报表 -->
+        <div id="myReport"></div>
+    </div>
+</div>
+</body>
+</html>
